@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
  * Created by tzy on 2017/7/21.
+ * 函数接口中的默认方法。
  */
 public class Lambda_composite {
     public static void main(String[] args) {
@@ -29,9 +31,24 @@ public class Lambda_composite {
         System.out.println(inventory);
 
 
+        //谓词复合
         Predicate<Apple> reaApple=(Apple apple)->apple.getColor().equals("red");
-        List<Apple> notRedApples = filterAbstract(inventory,reaApple.negate());//谓词复合
+        List<Apple> notRedApples = filterAbstract(inventory,reaApple.negate());
         System.out.println(notRedApples);
+
+        //函数复合
+        Function<Integer,Integer> f=x->x+1;
+        Function<Integer,Integer> g=x->x*2;
+        Function<Integer,Integer> h=f.andThen(g);
+        Function<Integer,Integer> k=f.compose(g);
+        /*
+        int result=f.apply(1);
+        System.out.println(result);
+         */
+        int result=h.apply(1);
+        System.out.println(result);
+        int result1=k.apply(1);
+        System.out.println(result1);
     }
     //将List类型抽象化
     public static <T>List<T> filterAbstract(List<T> inventory, Predicate<T> p){
