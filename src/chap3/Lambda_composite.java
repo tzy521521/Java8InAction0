@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 /**
  * Created by tzy on 2017/7/21.
- * 函数接口中的默认方法。
+ * 有些函数式接口中的都有几个用来复合Lambda表达式的默认方法。
  */
 public class Lambda_composite {
     public static void main(String[] args) {
