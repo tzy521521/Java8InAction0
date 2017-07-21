@@ -1,0 +1,6 @@
+Here's the (May 2015) list of known errors for (the print and final PDF download version of) Java 8 in Action.
+If you find any other error, please post it to the book's Author Online Forum.
+Thanks!
+1.Chapter 2, Page 36
+  The final code example in Section 2.3.4 should read:
+  List<Integer> evenNumbers = filter(numbers, (Integer i) -> i % 2 == 0);
