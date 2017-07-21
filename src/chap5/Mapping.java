@@ -1,10 +1,12 @@
 package chap5;
 
 import chap4.Dish;
+import chap4.Stream_iteration;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by tzy on 2017/7/21.
@@ -41,19 +43,21 @@ public class Mapping {
             System.out.println();
         }
         //
-        /*
-        List<String[]> result1 = words.stream()
+
+        List<Stream<String>> result1 = words.stream()
                 .map((String word)->word.split(""))
                 .map(Arrays::stream)
                 .distinct().collect(Collectors.toList());
                 //.forEach(System.out::println);
-         */
-
-        //
+        for (Stream<String> temp:result1) {
+            temp.forEach(System.out::println);
+        }
+        /*
         words.stream()
                 .map((String word)->word.split(""))
                 .flatMap(Arrays::stream)
                 .distinct()
                 .forEach(System.out::println);
+         */
     }
 }
