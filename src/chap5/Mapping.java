@@ -1,7 +1,6 @@
 package chap5;
 
 import chap4.Dish;
-import chap4.Stream_iteration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,22 +41,22 @@ public class Mapping {
             }
             System.out.println();
         }
-        //
-
+  
         List<Stream<String>> result1 = words.stream()
                 .map((String word)->word.split(""))
                 .map(Arrays::stream)
                 .distinct().collect(Collectors.toList());
                 //.forEach(System.out::println);
         for (Stream<String> temp:result1) {
-            temp.forEach(System.out::println);
+            temp.forEach((String s)->System.out.print(s+"/"));
+            System.out.println();
         }
-        /*
-        words.stream()
+
+        Stream<String> result2 = words.stream()
                 .map((String word)->word.split(""))
                 .flatMap(Arrays::stream)
-                .distinct()
-                .forEach(System.out::println);
-         */
+                .distinct();
+                //.forEach(System.out::println);
+        result2.forEach((String s)-> System.out.print(s+"/"));
     }
 }
