@@ -1,11 +1,15 @@
 package chap7;
 
+import java.util.concurrent.ForkJoinPool;
 import java.util.function.Function;
 
 /**
  * Created by tzy on 2017/7/23.
  */
 public class ParallelStreamsHarness {
+
+    public static final ForkJoinPool FORK_JOIN_POOL = new ForkJoinPool();
+
     public static void main(String[] args) {
 
         //用传统for循环的迭代版本执行：更底层，不需要对原始类型做装箱操作。
@@ -38,6 +42,7 @@ public class ParallelStreamsHarness {
         System.out.println("SideEffect sum done in: " + measurePerf(ParallelStreams::sideEffectSum, 10_000_000L) + " msecs" );
         System.out.println("~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("SideEffect prallel sum done in: " + measurePerf(ParallelStreams::sideEffectParallelSum, 10_000_000L) + " msecs" );
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~");
     }
     public static  <T,R>long measurePerf(Function<T,R> adder,T n){
         long fastest = Long.MAX_VALUE;
