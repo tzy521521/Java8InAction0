@@ -9,9 +9,14 @@ public class ParallelStreamsHarness {
     public static void main(String[] args) {
         //System.out.println("Iterative Sum done in: " + measurePerf(ParallelStreams::iterativeSum, 10_000_000L) + " msecs");
         //System.out.println("Sequential Sum done in: " + measurePerf(ParallelStreams::sequentialSum, 10_000_000L) + " msecs");
-
+        //System.out.println("Parallel forkJoinSum done in: " + measurePerf(ParallelStreams::parallelSum, 10_000_000L) + " msecs" );
         //System.out.println("rangedSum Sum done in: " + measurePerf(ParallelStreams::rangedSum, 10_000_000L) + " msecs");
         //System.out.println("rangedSum Sum done in: " + measurePerf(ParallelStreams::parallelRangedSum, 10_000_000L) + " msecs");
+
+        //用传统for循环的迭代版本执行：更底层，不需要对原始类型做装箱操作。
+        System.out.println("Iterative Sum done in: " + measurePerf(ParallelStreams::iterativeSum, 10_000_000L) + " msecs");
+        System.out.println("Sequential Sum done in: " + measurePerf(ParallelStreams::sequentialSum, 10_000_000L) + " msecs");
+        System.out.println("Sequential0 Sum done in: " + measurePerf(ParallelStreams::sequentialSum0, 10_000_000L) + " msecs");
     }
     public static  <T,R>long measurePerf(Function<T,R> adder,T n){
         long fastest = Long.MAX_VALUE;

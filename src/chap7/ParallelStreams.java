@@ -18,9 +18,14 @@ public class ParallelStreams {
 
     //
     public static long sequentialSum(long n){
-        //有装箱拆箱操作。
-        //return Stream.iterate(1L,(Long i)->i+1).limit(n).reduce(Long::sum).get();
         return Stream.iterate(1L,(Long i)->i+1).limit(n).reduce(0L,Long::sum);
+    }
+    public static long sequentialSum0(long n){
+        return Stream.iterate(1L,(Long i)->i+1).limit(n).reduce(Long::sum).get();
+    }
+    //
+    public static long parallelSum(long n) {
+        return Stream.iterate(1L, i -> i + 1).limit(n).parallel().reduce(Long::sum).get();
     }
 
     //
