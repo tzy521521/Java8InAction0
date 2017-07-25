@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Dish {
     public enum Type { MEAT, FISH, OTHER }
+    public enum CaloricLevel { DIET, NORMAL, FAT }
 
     private final String name;
     private final boolean vegetarian;
@@ -37,6 +38,11 @@ public class Dish {
         return type;
     }
 
+    public CaloricLevel getCaloricLevel(){
+        if (this.getCalories() <= 400) return CaloricLevel.DIET;
+        else if (this.getCalories() <= 700) return CaloricLevel.NORMAL;
+        else return CaloricLevel.FAT;
+    }
     @Override
     public String toString() {
         return name;
