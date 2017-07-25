@@ -8,6 +8,7 @@ import java.util.function.Function;
  */
 public class ParallelStreamsHarness {
 
+    //实例化一次orkJoinPool，把实例保存在静态字段中，使之成为单例。
     public static final ForkJoinPool FORK_JOIN_POOL = new ForkJoinPool();
 
     public static void main(String[] args) {
