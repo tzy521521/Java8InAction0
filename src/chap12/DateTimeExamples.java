@@ -1,10 +1,16 @@
 package chap12;
 
 import java.time.*;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.Chronology;
+import java.time.chrono.JapaneseDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by tzy on 2017/7/26.
@@ -111,6 +117,8 @@ public class DateTimeExamples {
 
         //12-9：TemporalAdjuster接口是一个函数市接口。
         useDateFormatter();
+        //
+        useZoneId();
     }
     public static void useDateFormatter(){
         LocalDate date=LocalDate.of(2014,3,18);
@@ -127,6 +135,74 @@ public class DateTimeExamples {
         System.out.println(date2);
 
         //代码清单12-10：DateTimeFormatter还支持一个静态工厂方法，可以按照某个特定的模式创建格式器。
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fomattedDate=date.format(formatter);
+        System.out.println(fomattedDate);
+        //静态的parse方法使用同样的格式器解析了刚才生成的字符串，并重建了该日期对象
+        LocalDate date3 =LocalDate.parse(fomattedDate,formatter);
+        System.out.println(date3);
+
+        //代码清单12-11：创建一个本地化的DateTimeFormatter
+        DateTimeFormatter italianFormatter = DateTimeFormatter.ofPattern("d. MMMM yyyy", Locale.ITALIAN);
+        String fomattedDate1=date.format(italianFormatter);
+        System.out.println(fomattedDate1);
+        LocalDate date4 =LocalDate.parse(fomattedDate1,italianFormatter);
+        System.out.println(date4);
+
+        //代码清单12-12 构造一个DateTimerFormatter
+        DateTimeFormatter complexFormatter = new DateTimeFormatterBuilder()
+                .appendText(ChronoField.DAY_OF_MONTH)
+                .appendLiteral(". ")
+                .appendText(ChronoField.MONTH_OF_YEAR)
+                .appendLiteral(" ")
+                .appendText(ChronoField.YEAR)
+                .parseCaseInsensitive()
+                .toFormatter(Locale.ITALIAN);
+        String fomattedDate2=date.format(complexFormatter);
+        System.out.println(fomattedDate2);
     }
 
+    public static void useZoneId(){
+
+        //
+        ZoneId romeZone =ZoneId.of("Europe/Rome");
+        System.out.println(romeZone);
+        //java8的新方法toZoneId将一个老的时区转换成ZoneID
+        ZoneId zoneId1= TimeZone.getDefault().toZoneId();
+        System.out.println(zoneId1);
+
+        //代码清单12-13：为时间点添加时区信息。
+        LocalDate date=LocalDate.of(2014,Month.MARCH,18);
+        ZonedDateTime zonedDateTime=date.atStartOfDay(romeZone);
+        System.out.println(zonedDateTime);
+
+        LocalDateTime dateTime=LocalDateTime.of(2014,Month.MARCH,18,18,13,25);
+        ZonedDateTime zonedDateTime1=dateTime.atZone(romeZone);
+        System.out.println(zonedDateTime1);
+
+        Instant instant =Instant.now();
+        ZonedDateTime zonedDateTime2=instant.atZone(romeZone);
+        System.out.println(zonedDateTime2);
+
+        //通过ZoneId可以将LocalDateTime转换成Instant????
+        //Instant instantFromeLoalDateTime=dateTime.toInstant(romeZone);
+        //也可以反向得到LocalDateTime
+        LocalDateTime timeFromeInstant=LocalDateTime.ofInstant(instant,romeZone);
+        System.out.println(timeFromeInstant);
+
+        //
+        ZoneOffset newYorkOffset=ZoneOffset.of("-05:00");
+        System.out.println(newYorkOffset);
+
+        OffsetDateTime dateTimeInNeYork=OffsetDateTime.of(dateTime,newYorkOffset);
+        System.out.println(dateTimeInNeYork);
+
+        //使用别的日历系统。
+        JapaneseDate japaneseDate=JapaneseDate.from(date);
+        System.out.println(japaneseDate);
+
+        Chronology japaneseChronology=Chronology.ofLocale(Locale.JAPAN);
+        ChronoLocalDate now=japaneseChronology.dateNow();
+        System.out.println(now);
+    }
 }
