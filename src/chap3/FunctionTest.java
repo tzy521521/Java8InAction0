@@ -10,7 +10,6 @@ import java.util.function.Function;
  */
 public class FunctionTest {
     public static void main(String[] args) {
-
         List<Integer> list=map(Arrays.asList("lambdas","in","action"),(String s)->s.length());
         System.out.println(list);
     }
